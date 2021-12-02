@@ -1,82 +1,99 @@
 package ru.netology.domain;
 
 public class Radio {
-    private int currentStation;
+
+    private int radioChannelMin = 0;
+    private int radioChannelMax = 9;
+    private int currentChannel;
+
+    private int volumeMin = 0;
+    private int volumeMax = 10;
     private int currentVolume;
-    private int maxVolume = 100;
-    private int minVolume = 0;
-    private int maxStation = 10;
-    private int minStation = 0;
 
-    public Radio(int currentStation, int currentVolume, int minStation, int maxStation, int maxVolume, int minVolume) {
-        this.currentStation = currentStation;
+    private boolean on;
+
+
+    public void switchToNextChannel() {
+        if (getCurrentChannel() == getRadioChannelMax()) {
+            setCurrentChannel(radioChannelMin);
+        } else if (getCurrentChannel() < getRadioChannelMax()) {
+            currentChannel++;
+            setCurrentChannel(currentChannel);
+        } else {
+            setCurrentChannel(radioChannelMax);
+        }
+    }
+
+    public void switchToPrevChannel() {
+        if (getCurrentChannel() == radioChannelMin) {
+            setCurrentChannel(radioChannelMax);
+        } else if (getCurrentChannel() > radioChannelMin) {
+            currentChannel--;
+            setCurrentChannel(currentChannel);
+        } else {
+            setCurrentChannel(radioChannelMin);
+        }
+    }
+
+    public void increaseVolume() {
+        if (getCurrentVolume() == volumeMax) {
+            setCurrentVolume(getCurrentVolume());
+        } else {
+            setCurrentVolume(currentVolume + 1);
+        }
+    }
+
+    public void decreaseVolume() {
+        if (getCurrentVolume() == volumeMin) {
+            currentVolume = getCurrentVolume();
+        } else {
+            setCurrentVolume(currentVolume - 1);
+        }
+    }
+
+    public int getRadioChannelMin() {
+        return radioChannelMin;
+    }
+
+    public int getRadioChannelMax() {
+        return radioChannelMax;
+    }
+
+    public int getCurrentChannel() {
+        return currentChannel;
+    }
+
+    public int getVolumeMin() {
+        return volumeMin;
+    }
+
+    public void setCurrentChannel(int currentChannel) {
+        this.currentChannel = currentChannel;
+        if (getCurrentChannel() > radioChannelMax) {
+            return;
+        }
+        if (getCurrentChannel() < radioChannelMin) {
+            return;
+        }
+    }
+
+    public void setCurrentVolume(int currentVolume) {
         this.currentVolume = currentVolume;
-        this.maxStation = maxStation;
-        this.minStation = minStation;
-        this.maxVolume = maxVolume;
-        this.minVolume = minVolume;
     }
 
-    public Radio() {
-
+    public int getVolumeMax() {
+        return volumeMax;
     }
-
-    public void shouldIncreaseVolume() {
-        if (currentVolume == maxVolume) {
-            return;
-        }
-        ++currentVolume;
-    }
-
-    public void shouldDecreaseVolume() {
-
-        if (currentVolume == minVolume) {
-            return;
-        }
-        --currentVolume;
-    }
-
-    public void shouldIncreaseStation() {
-
-        if (currentStation == maxStation) {
-            currentStation = minStation;
-            return;
-        }
-        ++currentStation;
-    }
-
-    public void shouldDecreaseStation() {
-        if (currentStation == minStation) {
-            currentStation = maxStation;
-            return;
-        }
-        --currentStation;
-    }
-
-
-    public int getCurrentStation() {
-        return currentStation;
-    }
-
 
     public int getCurrentVolume() {
         return currentVolume;
     }
 
-    public void setCurrentStation(int currentStation) {
-        if (currentStation > maxStation || currentStation < minStation) {
-            this.currentStation = minStation;
-            return;
-        }
-        this.currentStation = currentStation;
+    public boolean isOn() {
+        return on;
     }
 
-    public void setCurrentVolume(int currentVolume) {
-        if (currentVolume > maxVolume || currentVolume < minVolume) {
-            this.currentVolume = minVolume;
-            return;
-        }
-
-        this.currentVolume = currentVolume;
+    public void setOn(boolean on) {
+        this.on = on;
     }
 }
