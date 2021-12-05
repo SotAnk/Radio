@@ -1,7 +1,7 @@
 package ru.netology.domain;
 
 public class Radio {
-
+    private int allStation = 10;
     private int radioChannelMin = 0;
     private int radioChannelMax = 9;
     private int currentChannel;
@@ -12,6 +12,12 @@ public class Radio {
 
     private boolean on;
 
+    public Radio() {
+    }
+
+    public Radio(int allStation) {
+        this.allStation = allStation;
+    }
 
     public void switchToNextChannel() {
         if (getCurrentChannel() == getRadioChannelMax()) {
